@@ -22,7 +22,7 @@ class Game:
         while True:
             self._check_events()
             self.rocket.update()
-            self.bullets.update()
+            self._update_aliens()
             self._update_bullets()
             self._update_screen()
 
@@ -52,6 +52,8 @@ class Game:
             self.rocket.moving_down = False
 
     def _update_bullets(self):
+        self.bullets.update()
+
         screen_rect = self.screen.get_rect()
         for bullet in self.bullets.copy():
             if bullet.rect.left > screen_rect.right:
@@ -87,6 +89,10 @@ class Game:
         alien.rect.x = self.settings.scr_sz[0] - \
             (alien.rect.width + 2 * alien.rect.width * line_number)
         self.aliens.add(alien)
+
+    def _update_aliens(self):
+        """Updates the positions of all aliens in the fleet."""
+        self.aliens.update()
 
     def _update_screen(self):
         """Updates images on the screen, and flip to the new screen."""
