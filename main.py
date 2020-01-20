@@ -58,12 +58,17 @@ class Game:
         for bullet in self.bullets.copy():
             if bullet.rect.left > screen_rect.right:
                 self.bullets.remove(bullet)
-        
+
         # Check for any bullets that have hit aliens.
         #   If so, get rid of the bullet and the alien
         collisions = pygame.sprite.groupcollide(
             self.bullets, self.aliens, True, True
         )
+
+        if not self.aliens:
+            # Destroy existing bullets and create new fleet
+            self.bullets.empty()
+            self._create_fleet()
         # print(len(self.bullets))
 
     def _fire_bullet(self):
