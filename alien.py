@@ -7,6 +7,7 @@ class Alien(Sprite):
 
     def __init__(self, ai_game):
         super().__init__()
+        self.game = ai_game
         self.screen = ai_game.screen
         self.settings = ai_game.settings
 
@@ -23,8 +24,9 @@ class Alien(Sprite):
     def check_edges(self):
         """Return True if alien is at edge of screen."""
         screen_rect = self.screen.get_rect()
-        return True if (self.rect.right >= screen_rect.right
-                        or self.rect.left <= 0) else False
+        return True if (
+            self.rect.top >= self.game.settings.scr_sz[1] - self.rect.height
+            or self.rect.bottom <= self.rect.height) else False
 
     def update(self):
         """Move the alien to the top."""
